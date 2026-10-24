@@ -1,9 +1,9 @@
 # Inquest
-##Team Members:
-###Shruti Ravikumar
-###Shathiya
-###Mathivadhani
-###Mirudhulaa Sudhakaran
+## Team Members:
+### Shruti Ravikumar
+### Shathiya
+### Mathivadhani
+### Mirudhulaa Sudhakaran
 
 ## What it is
 
