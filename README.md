@@ -24,6 +24,36 @@ python eval.py --fake                             # fake model, no API key neede
 python demo.py --fake                             # demo, no API key needed
 ```
 
+## Local web GUI
+
+Install the frontend dependencies once:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+In a second terminal from the repository root, start the local API:
+
+```bash
+python gui_server.py
+```
+
+Open the Vite URL shown in the first terminal. The interface defaults to fake mode. To use the Gemini model, configure `GEMINI_API_KEY` in the repository `.env` and switch off fake mode. The Python API listens on localhost and streams run events to the page.
+
+To install the React Bits Pro components, put `REACTBITS_LICENSE_KEY` in `frontend/.env.local` (copy `frontend/.env.local.example`) and run these from `frontend/`:
+
+```bash
+npx shadcn@latest add @reactbits-starter/animated-list-tw
+npx shadcn@latest add @reactbits-starter/agentic-ball-tw
+npx shadcn@latest add @reactbits-starter/user-cursor-tw
+```
+
+The GUI includes matching local fallbacks so it remains usable when the optional licensed component registry is not configured.
+
+For production-style local use, build the frontend with `cd frontend && npm run build`, then launch the combined local server from the repository root with `python gui.py` and open `http://127.0.0.1:8000`.
+
 ## Model
 
 **Gemma 4** (`gemma-4-26b-a4b-it`) served via the [Gemini API](https://ai.google.dev/).  

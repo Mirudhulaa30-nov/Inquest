@@ -1,7 +1,7 @@
 """Main agent loop: run_case and decide dispatcher."""
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Callable
 
 from Inquest.schemas import (
     PRIVILEGED,
@@ -41,6 +41,7 @@ def run_case(
     model: Any,
     max_steps: int = 8,
     max_excisions: int = 3,
+    on_event: Callable[[dict[str, Any]], None] | None = None,
 ) -> RunResult:
     """Run *case* under defense *arm* and return a RunResult."""
     env = MailEnv(case.inbox, case.files)
@@ -81,6 +82,8 @@ def run_case(
                             "reason": v.reason,
                         }
                     )
+                    if on_event is not None:
+                        on_event(events[-1])
 
                     if v.action == "excise" and excisions < max_excisions:
                         for cid in v.culprits:
@@ -123,6 +126,8 @@ def run_case(
                 if "error" not in result:
                     executed.append(call)
                 events.append({"kind": "tool_call", "call": call.model_dump(), "result": result})
+                if on_event is not None:
+                    on_event(events[-1])
 
             if restart:
                 continue
